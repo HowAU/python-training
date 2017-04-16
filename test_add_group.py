@@ -2,6 +2,7 @@
 from selenium.webdriver.firefox.webdriver import WebDriver
 import unittest
 
+
 def is_alert_present(wd):
     try:
         wd.switch_to_alert().text
@@ -9,56 +10,69 @@ def is_alert_present(wd):
     except:
         return False
 
+
 class test_add_group(unittest.TestCase):
     def setUp(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
-    
-    def test_test_add_group(self):
-        success = True
-        wd = self.wd
-        #открытие домашней страницы
+
+    def open_home_page(self, wd):
         wd.get("http://localhost/addressbook/")
-        #login with deleting save parameters
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").send_keys("\\undefined")
-        wd.find_element_by_css_selector("body").click()
+
+    def login(self, wd, username, password):
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
+        wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").click()
         wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
+        wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
-        #open groups page
-        wd.find_element_by_name("searchform").click()
+
+    def open_groups_page(self, wd):
         wd.find_element_by_link_text("groups").click()
-        #создание новой группы
+
+    def create_group(self, wd, name, header, footer):
+        # создание новой группы
         wd.find_element_by_name("new").click()
-        #fill group form
+        # fill group form
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys("Gruppa")
+        wd.find_element_by_name("group_name").send_keys(name)
         if not wd.find_element_by_xpath("//div[@id='content']/form/select//option[1]").is_selected():
             wd.find_element_by_xpath("//div[@id='content']/form/select//option[1]").click()
         wd.find_element_by_name("group_header").click()
         wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys("sdfbv")
+        wd.find_element_by_name("group_header").send_keys(header)
         wd.find_element_by_name("group_footer").click()
         wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys("asfasf")
-        #submit group creation
+        wd.find_element_by_name("group_footer").send_keys(footer)
+        # submit group creation
         wd.find_element_by_name("submit").click()
-        #return to groups page
+
+    def return_to_groups_page(self, wd):
         wd.find_element_by_link_text("group page").click()
-        #logout
+
+    def logout(self, wd):
         wd.find_element_by_link_text("Logout").click()
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").send_keys("\\undefined")
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").send_keys("\\undefined")
-        self.assertTrue(success)
-    
+
+    def test_add_group(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.open_groups_page(wd)
+        self.create_group(wd, name="Gruppa", header="sdfbv", footer="asfasf")
+        self.return_to_groups_page(wd)
+        self.logout(wd)
+
+    def test_empty_group(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.open_groups_page(wd)
+        self.create_group(wd, name="", header="", footer="")
+        self.return_to_groups_page(wd)
+        self.logout(wd)
+
     def tearDown(self):
         self.wd.quit()
 
