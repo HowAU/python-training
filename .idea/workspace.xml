@@ -12,45 +12,45 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="test_add_group.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_add_group.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="68" column="20" lean-forward="true" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
-              <folding>
-                <element signature="e#24#82#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_add_contact.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_add_contact.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="91" column="38" lean-forward="false" selection-start-line="91" selection-start-column="33" selection-end-line="91" selection-end-column="38" />
-              <folding>
-                <element signature="e#24#82#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="contact.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/contact.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="187" lean-forward="false" selection-start-line="1" selection-start-column="187" selection-end-line="1" selection-end-column="187" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="group.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/group.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
               <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_add_group.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test_add_group.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="34" column="36" lean-forward="false" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="36" />
+              <folding>
+                <element signature="e#24#82#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_add_contact.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test_add_contact.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="295">
+              <caret line="106" column="56" lean-forward="false" selection-start-line="106" selection-start-column="56" selection-end-line="106" selection-end-column="56" />
+              <folding>
+                <element signature="e#24#82#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contact.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/contact.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="30" lean-forward="true" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -74,8 +74,8 @@
       <list>
         <option value="$PROJECT_DIR$/group.py" />
         <option value="$PROJECT_DIR$/test_add_group.py" />
-        <option value="$PROJECT_DIR$/test_add_contact.py" />
         <option value="$PROJECT_DIR$/contact.py" />
+        <option value="$PROJECT_DIR$/test_add_contact.py" />
       </list>
     </option>
   </component>
@@ -345,26 +345,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_add_group.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="68" column="20" lean-forward="true" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
-          <folding>
-            <element signature="e#24#82#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_add_contact.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="91" column="38" lean-forward="false" selection-start-line="91" selection-start-column="33" selection-end-line="91" selection-end-column="38" />
-          <folding>
-            <element signature="e#24#82#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/group.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -375,9 +355,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/contact.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="187" lean-forward="false" selection-start-line="1" selection-start-column="187" selection-end-line="1" selection-end-column="187" />
+        <state relative-caret-position="136">
+          <caret line="8" column="30" lean-forward="true" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_add_group.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="34" column="36" lean-forward="false" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="36" />
+          <folding>
+            <element signature="e#24#82#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_add_contact.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="106" column="56" lean-forward="false" selection-start-line="106" selection-start-column="56" selection-end-line="106" selection-end-column="56" />
+          <folding>
+            <element signature="e#24#82#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
