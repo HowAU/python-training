@@ -16,7 +16,9 @@ class test_add_contact(unittest.TestCase):
     
     def test_test_add_contact(self):
         wd = self.wd
+        #open_page
         wd.get("http://localhost/addressbook/")
+        #login
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("admin")
@@ -26,8 +28,9 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys("secret")
         wd.find_element_by_id("LoginForm").click()
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
-        
+        #open_contacts_page
         wd.find_element_by_link_text("add new").click()
+        # create_contact
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys("John")
@@ -98,8 +101,11 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys("wsx")
+        #finished_the_creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        #go_to_homepage
         wd.find_element_by_link_text("home page").click()
+        #logout
         wd.find_element_by_link_text("Logout").click()
 
     def tearDown(self):
