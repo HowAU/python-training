@@ -16,3 +16,8 @@ def test_add_group(app):   #убираем метод Self и добавляем
     app.create_group(Group(name="Gruppa", header="sdfbv", footer="asfasf"))
     app.logout()
 
+
+def test_empty_group(app):
+    app.login(username="", password="")
+    app.create_group(Group(name="", header="", footer=""))
+    app.logout()
