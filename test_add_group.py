@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-
-from fixture.application import Application
-from model.group import Group
+from group import Group
+from application import Application
 
 
 @pytest.fixture #команда инициализации фикстуры
@@ -19,6 +18,6 @@ def test_add_group(app):   #убираем метод Self и добавляем
 
 
 def test_empty_group(app):
-    app.login(username="admin", password="secret")
+    app.login(username="", password="")
     app.create_group(Group(name="", header="", footer=""))
     app.logout()
