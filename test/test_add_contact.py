@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from fixture.AppCont import AppCont
+from fixture.appcont import AppCont
 from model.contact import Contact
 
 
