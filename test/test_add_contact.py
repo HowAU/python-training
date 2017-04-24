@@ -1,15 +1,5 @@
 # -*- coding: utf-8 -*-
-import pytest
-
-from fixture.appcont import AppCont
 from model.contact import Contact
-
-
-@pytest.fixture #команда инициализации фикстуры
-def app(request):
-    fixture = AppCont()
-    request.addfinalizer(fixture.destroy)
-    return fixture
 
 
 def test_test_add_contact(app):
