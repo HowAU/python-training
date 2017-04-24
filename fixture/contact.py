@@ -1,39 +1,15 @@
-# -*- coding: utf-8 -*-
-import unittest
+class ContactHelper:
 
-from selenium.webdriver.firefox.webdriver import WebDriver
+    def __init__(self, app):
+        self.app = app
 
-from model.contact import Contact
-
-
-def is_alert_present(wd):
-    try:
-        wd.switch_to_alert().text
-        return True
-    except:
-        return False
-
-class test_add_contact(unittest.TestCase):
-    def setUp(self):
-        self.wd = WebDriver()
-        self.wd.implicitly_wait(60)
-
-    def open_page(self, wd):
-        wd.get("http://localhost/addressbook/")
-
-    def login(self, wd, username, password):
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
-
-    def open_contact_page(self, wd):
+    def open_contact_page(self):
+        wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
 
-    def creating_the_contact(self, wd, contact):
+    def creating_the_contact(self, contact):
+        wd = self.app.wd
+        self.open_contact_page()
         # create_contact
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -107,30 +83,8 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("notes").send_keys(contact.notes)
         # finished_the_creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.go_to_homepage()
 
-    def go_to_homepage(self, wd):
+    def go_to_homepage(self):
+        wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
-
-    def logout(self, wd):
-        wd.find_element_by_link_text("Logout").click()
-
-    def test_test_add_contact(self):
-        wd = self.wd
-        self.open_page(wd)
-        self.login(wd, username="admin", password="secret")
-        self.open_contact_page(wd)
-        self.creating_the_contact(wd, Contact(firstname="John", middlename="Jay", lastname="Johnson", nickname="Jammy",
-                             title="Text", company="Royal", address="Somwhere", home="123", mobile="456", work="789",
-                             fax="369", email="a@mail.com", email2="b@mail.com", email3="c@mail.com",
-                             homepage="page.com",byear="1996", ayear="1987", address2="qwerty", phone2="qaz",
-                             notes="wsx"))
-        self.go_to_homepage(wd)
-        self.logout(wd)
-
-    def tearDown(self):
-        self.wd.quit()
-
-if __name__ == '__main__':
-    unittest.main()
-
-
