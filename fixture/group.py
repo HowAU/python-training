@@ -39,3 +39,8 @@ class GroupHelper:
         wd.find_element_by_name("delete").click() #delete group
 
         self.return_to_groups_page()
+
+    def change_group_properties(self):
+        wd = self.app.wd
+
+
