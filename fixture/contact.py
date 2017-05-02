@@ -32,14 +32,14 @@ class ContactHelper:
         self.change_field("email", contact.email)
         self.change_field("email2", contact.email2)
         self.change_field("email3", contact.email3)
-        wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[19]").click()
-        wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[10]").click()
+       # wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[19]").click()
+       # wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[10]").click()
         self.change_field("homepage", contact.homepage)
         self.change_field("byear", contact.byear)
-        wd.find_element_by_xpath("//div[@id='content']/form/select[3]//option[16]").click()
-        wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[10]").click()
+       # wd.find_element_by_xpath("//div[@id='content']/form/select[3]//option[16]").click()
+       # wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[10]").click()
         self.change_field("ayear", contact.ayear)
-        wd.find_element_by_xpath("//div[@id='content']/form/select[5]//option[3]").click()
+       # wd.find_element_by_xpath("//div[@id='content']/form/select[5]//option[3]").click()
         self.change_field("address2", contact.address2)
         self.change_field("phone2", contact.phone2)
         self.change_field("notes", contact.notes)
@@ -55,14 +55,31 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
 
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
     def delete_first_contact(self):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()#select 1 contact
+        self.select_first_contact()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
 
+    def modify_first_contact(self, new_contact_data):
+        wd = self.app.wd
+        self.select_first_contact()
+        #open modification form
+        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        #fill form
+        self.fill_contact_form(new_contact_data)
+        #submit modification
+        wd.find_element_by_name("update").click()
+        self.go_to_homepage()
+
+
     def change_contact_properties(self):
         wd = self.app.wd
+        self.select_first_contact()
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -89,3 +106,4 @@ class ContactHelper:
         wd.find_element_by_name("homepage").clear()
         wd.find_element_by_name("homepage").send_keys("page2.com")
         wd.find_element_by_name("update").click()
+
