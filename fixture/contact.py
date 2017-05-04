@@ -53,10 +53,12 @@ class ContactHelper:
 
     def go_to_homepage(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home page").click()
+        if not (wd.current_url.endswith("") and len(wd.find_elements_by_name("Send e-Mail"))>0):
+            wd.find_element_by_link_text("home").click()
 
     def select_first_contact(self):
         wd = self.app.wd
+        self.go_to_homepage()
         wd.find_element_by_name("selected[]").click()
 
     def delete_first_contact(self):
