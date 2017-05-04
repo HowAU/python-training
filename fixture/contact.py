@@ -76,4 +76,9 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.go_to_homepage()
 
+    def count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]")) #len() возвращает количество запрашиваемых элементов
+
+
 

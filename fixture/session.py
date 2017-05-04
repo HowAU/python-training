@@ -24,12 +24,11 @@ class SessionHelper:
 
     def is_logged_in(self):
         wd = self.app.wd
-        return len(wd.find_elements_by_link_text("Logout")) > 0
+        return len(wd.find_elements_by_link_text("Logout")) > 0 #определяем количество элементов на странице
 
     def ensure_login(self, username, password):
-        wd = self.app.wd
         if self.is_logged_in():
-            if self.is_logged_in_as():
+            if self.is_logged_in_as(username):
                 return
             else:
                 self.logout()
@@ -37,7 +36,7 @@ class SessionHelper:
 
     def is_logged_in_as(self, username):
         wd = self.app.wd
-        return wd.find_element_by_xpath("//div/div[1]/form/b").text =="(" + username + ")"
+        return wd.find_element_by_xpath("//div/div[1]/form/b").text =="(" + username + ")" #.text означает что берем от элемента имя
 
 
 
