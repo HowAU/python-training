@@ -56,6 +56,11 @@ class ContactHelper:
         if not (wd.current_url.endswith("") and len(wd.find_elements_by_name("Send e-Mail"))>0):
             wd.find_element_by_link_text("home").click()
 
+    def open_homepage(self):
+        wd = self.app.wd
+        if not len(wd.find_elements_by_name("searchstring"))>0:
+            wd.find_element_by_link_text("home").click()
+
     def select_first_contact(self):
         wd = self.app.wd
         self.go_to_homepage()
@@ -80,6 +85,7 @@ class ContactHelper:
 
     def count(self):
         wd = self.app.wd
+        self.open_homepage()
         return len(wd.find_elements_by_name("selected[]")) #len() возвращает количество запрашиваемых элементов
 
 
