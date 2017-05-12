@@ -28,13 +28,14 @@ class Contact:
         self.cells = cells
 
     def __repr__(self): #определяет как будет выгляжить объект в консоли
-        return "%s:%s"%(self.cells, self.firstname)
+        return "%s:%s"%(self.firstname, self.cells)
 
     def __eq__(self, other): #позволет сравнивать логическое наполнение позиции, а не указатели
-        return (self.cells is None or other.cells is None or self.cells== other.cells) and self.firstname == \
-                                                                                           other.firstname
+        #return (self.cells is None or other.cells is None or self.cells == other.cells) and self.firstname ==
+        # \other.firstname
+        return self.firstname == other.firstname and self.cells == other.cells
 
-    def id_or_max(self):
+    def cells_or_max(self):
         if self.cells:
             return int(self.cells)
         else:
