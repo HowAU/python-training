@@ -1,3 +1,6 @@
+from model.group import Group
+
+
 class GroupHelper:
 
     def __init__(self, app):
@@ -66,4 +69,13 @@ class GroupHelper:
         self.open_groups_page()
         return len(wd.find_elements_by_name("selected[]")) #len() возвращает количество запрашиваемых элементов
 
-
+    def get_group_list(self): #сравнение размеров списка групп
+        wd = self.app.wd
+        self.open_groups_page()
+        groups = []
+        for element in wd.find_elements_by_css_selector("span.group"): #span.group- общее название раздела для  каждой
+            # из групп. И среди всех групп при помощи цикла формируем списовк
+            text = element.text #название группы text - свойство к которому можно обращаться для получения текста
+            id = element.find_element_by_name("selected[]").get_attribute("value") #номер бокса в списке групп
+            groups.append(Group(name=text, id = id))
+        return groups

@@ -1,7 +1,10 @@
+from sys import maxsize
+
+
 class Contact:
     def __init__(self, firstname=None, middlename=None, lastname=None, nickname=None, title=None, company=None,
                  address=None,  home=None, mobile=None, work=None, fax=None, email=None, email2=None, email3=None,
-                 homepage=None, byear=None, ayear=None, address2=None, phone2=None, notes=None):
+                 homepage=None, byear=None, ayear=None, address2=None, phone2=None, notes=None, cells=None):
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
@@ -22,3 +25,19 @@ class Contact:
         self.address2 = address2
         self.phone2 = phone2
         self.notes = notes
+        self.cells = cells
+
+    def __repr__(self): #определяет как будет выгляжить объект в консоли
+        return "%s:%s"%(self.cells, self.firstname)
+
+    def __eq__(self, other): #позволет сравнивать логическое наполнение позиции, а не указатели
+        return (self.cells is None or other.cells is None or self.cells== other.cells) and self.firstname == \
+                                                                                           other.firstname
+
+    def id_or_max(self):
+        if self.cells:
+            return int(self.cells)
+        else:
+            return maxsize
+
+
