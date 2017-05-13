@@ -94,8 +94,8 @@ class ContactHelper:
         wd = self.app.wd
         self.open_homepage()
         contacts = []
-        cells=[]
         for row in wd.find_elements_by_name("entry"):
             text = row.text #название группы
-            contacts.append(Contact(firstname=text, cells = cells))
+            value = row.find_elements_by_name("value")
+            contacts.append(Contact(firstname=text, cells= value))
         return contacts
