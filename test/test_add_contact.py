@@ -7,7 +7,7 @@ def test_add_contact(app):
     cont=Contact(firstname="John", middlename="Jay", lastname="Johnson",
             home="123", mobile="456", work="789",
             email="a@mail.com", email2="b@mail.com", email3="c@mail.com",
-            homepage="page.com", phone2="qaz")
+            phone2="qaz")
     app.contact.creating_the_contact(cont)
     new_contacts = app.contact.get_contact_list() #получаем список новых групп
     assert len(old_contacts) + 1 == len(new_contacts) #сравниваем длины списков

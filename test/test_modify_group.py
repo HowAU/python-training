@@ -10,7 +10,7 @@ def test_modify_group_name(app):
     assert len(old_groups) == len(new_groups)#новый список групп должен быть на 1 больше, чем старый
     old_groups[0] = group
     app.group.delete_first_group()
-
+    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 #def test_modify_group_header(app):
 #    if app.group.count() == 0:
