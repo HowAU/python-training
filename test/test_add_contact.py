@@ -12,4 +12,6 @@ def test_add_contact(app):
     app.contact.creating_the_contact(cont)
     new_contacts=app.contact.get_contact_list() #получаем список новых групп
     assert len(old_contacts) + 1 == len(new_contacts) #сравниваем длины списков
-    print(old_contacts)
+    old_contacts.append(cont)
+    assert sorted(old_contacts, key=Contact.cells_or_max) == sorted(new_contacts, key=Contact.cells_or_max) #Инструкция
+    # assert позволяет производить проверки истинности утверждений, что может

@@ -90,14 +90,16 @@ class ContactHelper:
         self.open_homepage()
         return len(wd.find_elements_by_name("selected[]")) #len() возвращает количество запрашиваемых элементов
 
+
     def get_contact_list(self): #сравнение размеров списка
         wd = self.app.wd
         self.open_homepage()
         contacts = []
+        cells=[]
         for row in wd.find_elements_by_name("entry"):
-            cells = row.find_elements_by_tag_name("td")
             text = row.text #название группы
             contacts.append(Contact(firstname=text, cells = cells))
+        #adress = contacts[0:3]
         return contacts
 
 
