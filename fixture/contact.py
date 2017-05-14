@@ -17,6 +17,7 @@ class ContactHelper:
         # finished_the_creation
         wd.find_element_by_name("submit").click()
         self.go_to_homepage()
+        self.contact_cache = None
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
@@ -73,6 +74,7 @@ class ContactHelper:
         self.select_first_contact()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
+        self.contact_cache = None
 
     def modify_first_contact(self, new_contact_data):
         wd = self.app.wd
@@ -84,18 +86,22 @@ class ContactHelper:
         #submit modification
         wd.find_element_by_name("update").click()
         self.go_to_homepage()
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
         self.open_homepage()
         return len(wd.find_elements_by_name("selected[]")) #len() возвращает количество запрашиваемых элементов
 
+    contact_cache = None # проверка наполненности кэша
+
     def get_contact_list(self): #сравнение размеров списка
-        wd = self.app.wd
-        self.open_homepage()
-        contacts = []
-        for row in wd.find_elements_by_name("entry"):
-            text = row.text #название группы
-            value = row.find_elements_by_name("value")
-            contacts.append(Contact(firstname=text, cells= value))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_homepage()
+            self.contact_cache = []
+            for row in wd.find_elements_by_name("entry"):
+                text = row.text #название группы
+                value = row.find_elements_by_name("value")
+                self.contact_cache.append(Contact(firstname=text, cells= value))
+        return list(self.contact_cache)

@@ -20,6 +20,7 @@ class GroupHelper:
         # submit group creation
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
+        self.group_cache = None #сброс кэша. применяется когда он становится невалидным (неактуальным)
 
     def fill_group_form(self, group):
         wd = self.app.wd
@@ -47,6 +48,8 @@ class GroupHelper:
         wd.find_element_by_name("selected[]").click()#select 1 group
         wd.find_element_by_name("delete").click() #delete group
         self.return_to_groups_page()
+        self.group_cache = None #сброс кэша. применяется когда он становится невалидным (неактуальным)
+
 
     def select_first_group(self):
         wd = self.app.wd
@@ -63,19 +66,23 @@ class GroupHelper:
         #submit modification
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
+        self.group_cache = None #сброс кэша. применяется когда он становится невалидным (неактуальным)
 
     def count(self):
         wd = self.app.wd
         self.open_groups_page()
         return len(wd.find_elements_by_name("selected[]")) #len() возвращает количество запрашиваемых элементов
 
+    group_cache = None # проверка наполненности кэша
+
     def get_group_list(self): #сравнение размеров списка групп
-        wd = self.app.wd
-        self.open_groups_page()
-        groups = []
-        for element in wd.find_elements_by_css_selector("span.group"): #span.group- общее название раздела для  каждой
-            # из групп. И среди всех групп при помощи цикла формируем списовк
-            text = element.text #название группы text - свойство к которому можно обращаться для получения текста
-            id = element.find_element_by_name("selected[]").get_attribute("value") #номер бокса в списке групп
-            groups.append(Group(name=text, id = id))
-        return groups
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.open_groups_page()
+            self.group_cache = []
+            for element in wd.find_elements_by_css_selector("span.group"): #span.group- общее название раздела для  каждой
+                # из групп. И среди всех групп при помощи цикла формируем списовк
+                text = element.text #название группы text - свойство к которому можно обращаться для получения текста
+                id = element.find_element_by_name("selected[]").get_attribute("value") #номер бокса в списке групп
+                self.group_cache.append(Group(name=text, id = id))
+        return list(self.group_cache) #возвращаем список, т.к. это получается копия кэша и оригинал не страдает

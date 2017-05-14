@@ -9,8 +9,8 @@ def test_add_contact(app):
             email="a@mail.com", email2="b@mail.com", email3="c@mail.com",
             phone2="qaz")
     app.contact.creating_the_contact(cont)
+    assert len(old_contacts) + 1 == app.contact.count() #сравниваем длины списков
     new_contacts = app.contact.get_contact_list() #получаем список новых групп
-    assert len(old_contacts) + 1 == len(new_contacts) #сравниваем длины списков
     old_contacts.append(cont)
     print(old_contacts)
     print("----------------------")
