@@ -12,7 +12,7 @@ def test_modify_group_name(app):
                       #app.group.modify_first_group(group)
     app.group.modify_group_by_index(index, group)
     new_groups = app.group.get_group_list()
-    assert len(old_groups) == len(new_groups)#новый список групп должен быть на 1 больше, чем старый
+    assert len(old_groups) == app.group.count()#новый список групп должен быть на 1 больше, чем старый
     old_groups[index] = group
     app.group.delete_first_group()
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)

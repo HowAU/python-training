@@ -117,6 +117,8 @@ class ContactHelper:
                 cells = row.find_elements_by_tag_name("td")
                 text1 = cells[1].text
                 text2 = cells[2].text
-                id = cells[0].find_element_by_name("selected[]").get_attribute("value")
+                id = cells[0].find_element_by_name("selected[]").get_attribute("value") #при создании списка cells получается
+                # поэлементный мегасписок содержащий все, что имеется в столбце у таблицы контактов, из этих поэлементных значений
+                #  мы имеем возможность выбрать нужные нам свойства и далее работать с ними
                 self.contact_cache.append(Contact(firstname=text2, lastname=text1, id=id))
         return list(self.contact_cache)

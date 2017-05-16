@@ -9,7 +9,7 @@ def test_modify_contact_firstname(app):
     # Проверка будет осуществляться "поячеечно"
     app.contact.modify_first_contact(cont)
     new_contacts = app.contact.get_contact_list()  # получаем список новых групп
-    assert len(old_contacts) == len(new_contacts) #сравниваем длины списков
+    assert len(old_contacts) == app.contact.count() #сравниваем длины списков
     old_contacts[0] = cont
     #assert old_contacts == new_contacts
     print(old_contacts)

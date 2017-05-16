@@ -9,8 +9,9 @@ def test_delete_some_contact(app):
     old_contacts = app.contact.get_contact_list() #получаем список существующих групп
     index = randrange(len(old_contacts))
     print(index)
-    app.contact.delete_first_contact()
+    app.contact.delete_contact_by_index(index)
     new_contacts = app.contact.get_contact_list()  # получаем список новых групп
-    assert len(old_contacts) - 1 == len(new_contacts) #сравниваем длины списков
+    assert len(old_contacts) - 1 == app.contact.count() #сравниваем длины списков
     old_contacts[index:index+1] = []
     assert old_contacts == new_contacts
+    
