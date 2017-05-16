@@ -2,18 +2,20 @@ from model.contact import Contact
 
 
 def test_modify_contact_firstname(app):
-    old_contacts=app.contact.get_contact_list() #получаем список существующих групп
-    cont=Contact(firstname="test1")
-    cont.cells = old_contacts[0].cells #применяем для сохранения идентефикатора контакта для последующего изменения.
+    old_contacts = app.contact.get_contact_list() #получаем список существующих групп
+    cont = Contact(firstname="test1", lastname="test2", address="Street")
+    #cont = Contact(address="Street")
+    cont.id = old_contacts[0].id #применяем для сохранения идентефикатора контакта для последующего изменения.
     # Проверка будет осуществляться "поячеечно"
     app.contact.modify_first_contact(cont)
     new_contacts = app.contact.get_contact_list()  # получаем список новых групп
     assert len(old_contacts) == len(new_contacts) #сравниваем длины списков
     old_contacts[0] = cont
-    assert old_contacts == new_contacts
+    #assert old_contacts == new_contacts
     print(old_contacts)
     print("----------------------")
     print(new_contacts)
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max) #Инструкция
 
 
 

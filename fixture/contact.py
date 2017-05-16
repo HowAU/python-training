@@ -69,16 +69,29 @@ class ContactHelper:
         self.go_to_homepage()
         wd.find_element_by_name("selected[]").click()
 
-    def delete_first_contact(self):
+    def select_contact_by_index(self, index):
         wd = self.app.wd
-        self.select_first_contact()
+        self.go_to_homepage()
+        wd.find_elements_by_name("selected[]")[index].click() #смотри построение списка групп
+
+    def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
+        wd = self.app.wd
+        self.go_to_homepage()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
     def modify_first_contact(self, new_contact_data):
+        self.modify_contact_by_index(0, new_contact_data)
+
+    def modify_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
-        self.select_first_contact()
+        self.go_to_homepage()
+        self.select_contact_by_index(index)
         #open modification form
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         #fill form
@@ -101,7 +114,9 @@ class ContactHelper:
             self.open_homepage()
             self.contact_cache = []
             for row in wd.find_elements_by_name("entry"):
-                text = row.text #название группы
-                value = row.find_elements_by_name("value")
-                self.contact_cache.append(Contact(firstname=text, cells= value))
+                cells = row.find_elements_by_tag_name("td")
+                text1 = cells[1].text
+                text2 = cells[2].text
+                id = cells[0].find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(firstname=text2, lastname=text1, id=id))
         return list(self.contact_cache)
