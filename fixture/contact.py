@@ -81,9 +81,13 @@ class ContactHelper:
         wd = self.app.wd
         self.go_to_homepage()
         self.select_contact_by_index(index)
-        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        self.find_delete_button()
         wd.switch_to_alert().accept()
         self.contact_cache = None
+
+    def find_delete_button(self):
+        wd = self.app.wd
+        return wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
 
     def modify_first_contact(self, new_contact_data):
         self.modify_contact_by_index(0, new_contact_data)
@@ -93,13 +97,17 @@ class ContactHelper:
         self.go_to_homepage()
         self.select_contact_by_index(index)
         #open modification form
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        self.find_modify_button()
         #fill form
         self.fill_contact_form(new_contact_data)
         #submit modification
         wd.find_element_by_name("update").click()
         self.go_to_homepage()
         self.contact_cache = None
+
+    def find_modify_button(self):
+        wd = self.app.wd
+        return wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
 
     def count(self):
         wd = self.app.wd

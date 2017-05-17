@@ -14,4 +14,4 @@ def test_delete_some_contact(app):
     assert len(old_contacts) - 1 == app.contact.count() #сравниваем длины списков
     old_contacts[index:index+1] = []
     assert old_contacts == new_contacts
-    
+
