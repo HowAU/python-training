@@ -6,7 +6,8 @@ def test_modify_contact_firstname(app):
         app.contact.creating_the_contact(Contact(firstname="test"))
     old_contacts = app.contact.get_contact_list() #получаем список существующих групп
     index = randrange(len(old_contacts))
-    cont = Contact(firstname="test1", lastname="test2", address="Street")
+    cont = Contact(firstname="Changename", middlename="Jay", lastname="ChangeSurname",
+            home="777", mobile="666", work="555", phone2="444")
     #cont = Contact(address="Street")
     cont.id = old_contacts[index].id #применяем для сохранения идентефикатора контакта для последующего изменения.
     # Проверка будет осуществляться "поячеечно"
