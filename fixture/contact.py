@@ -1,4 +1,5 @@
 from model.contact import Contact
+import re
 
 class ContactHelper:
 
@@ -125,12 +126,15 @@ class ContactHelper:
                 cells = row.find_elements_by_tag_name("td")
                 text1 = cells[1].text
                 text2 = cells[2].text
+                full_name = text1 + " " + text2
                 id = cells[0].find_element_by_name("selected[]").get_attribute("value") #при создании списка cells получается
                 # поэлементный мегасписок содержащий все, что имеется в столбце у таблицы контактов, из этих поэлементных значений
                 #  мы имеем возможность выбрать нужные нам свойства и далее работать с ними
-                all_phones=cells[5].text.splitlines()
-                self.contact_cache.append(Contact(firstname=text2, lastname=text1, id=id, home=all_phones[0],
-                                                  mobile=all_phones[1], work=all_phones[2], phone2=all_phones[3]))
+                contact_address = cells[3].text
+                all_emails = cells[4].text
+                all_phones = cells[5].text#берем текст ячейки
+                self.contact_cache.append(Contact(id=id, full_name=full_name, address=contact_address,
+                                                  all_emails_from_homepage=all_emails, all_phones_from_homepage=all_phones)) #заменяем телефоны поштучно на список со всеми телефонами сразу
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -157,5 +161,20 @@ class ContactHelper:
         work = wd.find_element_by_name("work").get_attribute("value")
         mobile = wd.find_element_by_name("mobile").get_attribute("value")
         phone2 = wd.find_element_by_name("phone2").get_attribute("value")
-        return Contact(firstname=firstname, lastname=lastname, id=id,home=home, work=work, mobile=mobile, phone2=phone2)
+        email = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
+        address = wd.find_element_by_name("address").get_attribute("value")
+        return Contact(firstname=firstname, lastname=lastname, id=id, home=home, work=work, mobile=mobile, phone2=phone2,
+                       email=email, email2=email2, email3=email3, address=address)
+
+    def get_contact_info_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+        home = re.search("H: (.*)", text).group(1)
+        work = re.search("W: (.*)", text).group(1)
+        mobile = re.search("M: (.*)", text).group(1)
+        phone2 = re.search("P: (.*)", text).group(1)
+        return Contact(home=home, work=work, mobile=mobile, phone2=phone2)
 
