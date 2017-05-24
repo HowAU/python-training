@@ -124,16 +124,16 @@ class ContactHelper:
             self.contact_cache = []
             for row in wd.find_elements_by_name("entry"):
                 cells = row.find_elements_by_tag_name("td")
-                text1 = cells[1].text
-                text2 = cells[2].text
-                full_name = text1 + " " + text2
+                lastname = cells[1].text
+                firstname = cells[2].text
+                #full_name = text1 + " " + text2
                 id = cells[0].find_element_by_name("selected[]").get_attribute("value") #при создании списка cells получается
                 # поэлементный мегасписок содержащий все, что имеется в столбце у таблицы контактов, из этих поэлементных значений
                 #  мы имеем возможность выбрать нужные нам свойства и далее работать с ними
                 contact_address = cells[3].text
                 all_emails = cells[4].text
                 all_phones = cells[5].text#берем текст ячейки
-                self.contact_cache.append(Contact(id=id, full_name=full_name, address=contact_address,
+                self.contact_cache.append(Contact(id=id, lastname=lastname, firstname=firstname, address=contact_address,
                                                   all_emails_from_homepage=all_emails, all_phones_from_homepage=all_phones)) #заменяем телефоны поштучно на список со всеми телефонами сразу
         return list(self.contact_cache)
 

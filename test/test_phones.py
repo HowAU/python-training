@@ -7,8 +7,9 @@ def test_phones_on_homepage(app): #тест, сравнивающий телеф
     index = randrange(len(app.contact.get_contact_list()))
     contact_from_homepage = app.contact.get_contact_list()[index]
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
-    assert contact_from_homepage.address == merge_address_like_on_homepage(contact_from_edit_page)
-    assert contact_from_homepage.full_name == merge_names_like_on_homepage(contact_from_edit_page)
+    assert contact_from_homepage.address == contact_from_edit_page.address
+    assert contact_from_homepage.firstname == contact_from_edit_page.firstname
+    assert contact_from_homepage.lastname == contact_from_edit_page.lastname
     assert contact_from_homepage.all_emails_from_homepage == merge_emails_like_on_homepage(contact_from_edit_page)
     assert contact_from_homepage.all_phones_from_homepage == merge_phones_like_on_homepage(contact_from_edit_page)
     #берем уже готовую склейку со стартовой страницы и сравниваем с изготавливаемой склейкой со страницы редактированя
@@ -38,21 +39,6 @@ def merge_phones_like_on_homepage(Contact):
 
 def merge_emails_like_on_homepage(Contact):
     return "\n".join(filter(lambda x: x != "", #лямбда-функция позволяет накладывать условия на дальнейший код
-                            map(lambda x: clear(x),
-                                filter(lambda x: x is not None,
-                                       [Contact.email, Contact.email2, Contact.email3])))) #функция склейки
+                            filter(lambda x: x is not None,
+                                       [Contact.email, Contact.email2, Contact.email3]))) #функция склейки
 #фильтр убирает пустые значения, мэп скрывает все минусы и прочие ненужные знакиб новый фильтр скрывает все пусты значения
-
-
-def merge_names_like_on_homepage(Contact):
-    return " ".join(filter(lambda x: x != "", #лямбда-функция позволяет накладывать условия на дальнейший код
-                            map(lambda x: clear(x),
-                                filter(lambda x: x is not None,
-                                       [Contact.lastname, Contact.firstname]))))
-
-
-def merge_address_like_on_homepage(Contact):
-    return " ".join(filter(lambda x: x != "", #лямбда-функция позволяет накладывать условия на дальнейший код
-                            map(lambda x: clear(x),
-                                filter(lambda x: x is not None,
-                                       [Contact.address]))))

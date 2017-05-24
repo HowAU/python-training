@@ -1,12 +1,25 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
+import pytest
+import random
+import string
 
 
-def test_add_group(app):   #убираем метод Self и добавляем метод app для ссылки на фикстуру аппликешен
+def random_string(prefix, maxlen): #генерация случайных данных для теста
+    symbols = string.ascii_letters+string.digits + " "*10 #данные которые применяем в случайной строке
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))]) #случайным образом выбирает символы из заданной строки
+
+testdata = [Group(name=" ", header=" ", footer=" ")] + [
+     Group(name=random_string("name", 10), header=random_string("header", 15), footer=random_string("footer", 20))
+     for i in range(random.randrange(5))
+]
+
+
+@pytest.mark.parametrize("group", testdata, ids =[repr(x) for x in testdata] )  #обратить внимание - подробнее что это
+def test_add_group(app, group):   #убираем метод Self и добавляем метод app для ссылки на фикстуру аппликешен
     old_groups=app.group.get_group_list()
-    group = Group(name="Gruppa", header="sdfbv", footer="asfasf")
     app.group.create(group)
-    assert len(old_groups)+ 1 == app.group.count()#новый список групп должен быть на 1 больше, чем старый
+    assert len(old_groups)+ 1 == app.group.count()#новый список групп должен быть на 1 больше, чем старый   //(хеширование)
     #т.к. создали новую группу. Короче говоря - просто считаем кол-во групп в начале и  конце и сравниваем
     new_groups = app.group.get_group_list()
     old_groups.append(group) # Добавляет указанный элемент в конец списка
@@ -14,11 +27,9 @@ def test_add_group(app):   #убираем метод Self и добавляем
     # быть использовано в отладочных целях.
 
 
-#def test_empty_group(app):
-#    old_groups=app.group.get_group_list()
-#    group = Group(name="Gruppas", header="sdggd", footer="qwr")
-#    app.group.create(group)
-#    new_groups=app.group.get_group_list()
-#    assert len(old_groups)+ 1 == len(new_groups)#новый список групп должен быть на 1 больше, чем старый
-#    old_groups.append(group) # Добавляет указанный элемент в конец списка
-#    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+#testdata =  [ один из варантов создания списка групп
+#     Group(name=name, header=header, footer=footer)
+#     for name in ["", random_string("name", 10)]    #настоящая форма записи означает что каждое из значений принимает по 2 варианта и как следствие всего буден 8 комбинаций
+#     for header in ["", random_string("header", 10)]
+#     for footer in ["", random_string("footer", 10)]
+#]
