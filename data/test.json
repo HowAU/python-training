@@ -1,0 +1,27 @@
+[
+  {
+    "firstname": "",
+    "middlename": "",
+    "lastname": "",
+    "nickname": null,
+    "title": null,
+    "company": null,
+    "address": null,
+    "home": null,
+    "mobile": null,
+    "work": null,
+    "fax": null,
+    "email": null,
+    "email2": null,
+    "email3": null,
+    "homepage": null,
+    "byear": null,
+    "ayear": null,
+    "address2": null,
+    "phone2": null,
+    "notes": null,
+    "id": null,
+    "all_phones_from_homepage": null,
+    "all_emails_from_homepage": null
+  }
+]
