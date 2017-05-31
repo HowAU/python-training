@@ -2,6 +2,7 @@ import pytest
 import json
 import os.path
 from fixture.application import Application
+import importlib
 
 
 fixture = None
@@ -32,6 +33,21 @@ def stop(request):
     request.addfinalizer(fin) #указание на разрушение фикстуры
     return fixture
 
+
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox") #что хотим передать, что с этим сделать и какое значение по умолчанию
     parser.addoption("--target", action="store", default="target.json")
+
+
+# что происходит в этой функции - грубо говоря мы ищем файлы в дирректории указанной далее. Как - задаем в старте теста адрес
+# начинающийся на data_ , к примеру, после отсекаем эту часть data_ и остается просто contacts. далее переходим к следующей функции
+def pytest_generate_tests(metafunc):#метафунк - через него можно получить почти любую информацию об объекте
+    for fixture in metafunc.fixturenames:
+        if fixture.startswith("data_"): #если фикстура начинается с data_
+            testdata = load_form_module(fixture[5:]) #то подгружаем данные из модуля с удалением первых 5 символов
+            metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
+
+
+# которая импортирует данные из файла, чье название мы получили ранее, теперь перевели фв строковую форму и забрали оттуда нужный параметр testdata
+def load_form_module(module):
+    return importlib.import_module("data.%s" % module).testdata
