@@ -4,10 +4,21 @@ import os.path
 from fixture.application import Application
 import importlib
 import jsonpickle
+from fixture.db import DbFixture
+
 
 
 fixture = None
 target = None
+
+def load_config(file):
+    global target  # указание на использование глобальной переменной
+    if target is None:
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)  # переход к(абсолютный путь(путь к текущему файлу)). При данной записи нет нужды указывать адресс в настройках питона
+        with open(config_file) as f:
+            target = json.load(f)#f - указывает объект содержащийся в открытом файле
+    return target
+
 
 @pytest.fixture #команда инициализации фикстуры. добавка (scope = "session") дает возможность запускать несколько тестов
                 #  в 1 окне
@@ -15,16 +26,23 @@ def app(request):
     global fixture
     global target #указание на использование глобальной переменной
     browser = request.config.getoption("--browser") #сделать ввод логина и пароля
-    if target is None:
-        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption(
-            "--target"))  # переход к(абсолютный путь(путь к текущему файлу)). При данной записи нет нужды указывать адресс в настройках питона
-        with open(config_file) as f:
-            target = json.load(f) #f - указывает объект содержащийся в открытом файле
+    web_config = load_config(request.config.getoption("--target"))['web']
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, baseUrl=target['baseUrl'] )               #непосредстевнно сама фикстура (набор вспомогательных методов)
+        fixture = Application(browser=browser, baseUrl=web_config['baseUrl'] )               #непосредстевнно сама фикстура (набор вспомогательных методов)
    # непосредстевнно сама фикстура (набор вспомогательных методов)
-    fixture.session.ensure_login(username=target["username"], password=target["password"]) #проверка предусловия
+    fixture.session.ensure_login(username=web_config["username"], password=web_config["password"]) #проверка предусловия
     return fixture
+
+
+@pytest.fixture(scope="session")
+def db(request):
+    db_config = load_config(request.config.getoption("--target"))['db']
+    dbfixture=DbFixture(host=db_config['host'], name=db_config['name'], user=db_config['user'], password=db_config['password'])
+    def fin():
+        dbfixture.destroy()
+    request.addfinalizer(fin)
+    return dbfixture
+
 
 @pytest.fixture (scope="session", autouse=True)
 def stop(request):

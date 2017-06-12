@@ -178,3 +178,15 @@ class ContactHelper:
         phone2 = re.search("P: (.*)", text).group(1)
         return Contact(home=home, work=work, mobile=mobile, phone2=phone2)
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.go_to_homepage()
+        self.select_contact_by_id(id)
+        self.find_delete_button()
+        wd.switch_to_alert().accept()
+        self.contact_cache = None
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        self.go_to_homepage()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()  # смотри построение списка групп
