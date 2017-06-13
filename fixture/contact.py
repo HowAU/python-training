@@ -180,7 +180,7 @@ class ContactHelper:
 
     def delete_contact_by_id(self, id):
         wd = self.app.wd
-        self.go_to_homepage()
+        self.open_homepage()
         self.select_contact_by_id(id)
         self.find_delete_button()
         wd.switch_to_alert().accept()
@@ -188,5 +188,5 @@ class ContactHelper:
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
-        self.go_to_homepage()
+        self.open_homepage()
         wd.find_element_by_css_selector("input[value='%s']" % id).click()  # смотри построение списка групп

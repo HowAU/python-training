@@ -52,10 +52,16 @@ def stop(request):
     request.addfinalizer(fin) #указание на разрушение фикстуры
     return fixture
 
+@pytest.fixture
+def check_ui(request):
+    return request.config.getoption("--check_ui")
+
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox") #что хотим передать, что с этим сделать и какое значение по умолчанию
     parser.addoption("--target", action="store", default="target.json")
+    parser.addoption("--check_ui", action="store_true")
+
 
 
 # что происходит в этой функции - грубо говоря мы ищем файлы в дирректории указанной далее. Как - задаем в старте теста адрес

@@ -1,7 +1,7 @@
 from model.group import Group
 import random
 
-def test_delete_some_group(app, db):
+def test_delete_some_group(app, db, check_ui):
     #проверка на наличие хотя бы 1 группы/котакта
     if len(db.get_group_list()) ==0:
         app.group.create(Group(name="test"))
@@ -14,3 +14,5 @@ def test_delete_some_group(app, db):
     # получаются разные указатели на 1 элемент в старом и новом списках. Сравнение в иттоге будет неверным
     # для корректности сровнения добавлется элемент __eq__, который сравнивает логическое наполнение,а не указатели
     assert old_groups == new_groups
+    if check_ui:
+        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)

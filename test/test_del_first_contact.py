@@ -14,5 +14,7 @@ def test_delete_some_contact(app, db):
     new_contacts = db.get_contact_list()  # получаем список новых групп
    # assert len(old_contacts) - 1 == app.contact.count() #сравниваем длины списков
     old_contacts.remove(contact)
+    print(old_contacts)
+    print(new_contacts)
     assert old_contacts == new_contacts
 
