@@ -185,8 +185,28 @@ class ContactHelper:
         self.find_delete_button()
         wd.switch_to_alert().accept()
         self.contact_cache = None
+        wd.find_elements_by_name("entry")  # смотри построение списка групп
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
         self.open_homepage()
         wd.find_element_by_css_selector("input[value='%s']" % id).click()  # смотри построение списка групп
+
+    def modify_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        self.go_to_homepage()
+        #open modification form
+        self.open_contact_to_edit_by_id(id)
+        #fill form
+        self.fill_contact_form(new_contact_data)
+        #submit modification
+        wd.find_element_by_name("update").click()
+        self.go_to_homepage()
+        self.contact_cache = None
+
+    def open_contact_to_edit_by_id(self, id):
+        wd = self.app.wd
+        self.open_homepage()
+        row = wd.find_elements_by_name("entry")[id]
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
