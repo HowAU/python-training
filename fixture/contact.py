@@ -194,7 +194,7 @@ class ContactHelper:
 
     def modify_contact_by_id(self, id, new_contact_data):
         wd = self.app.wd
-        self.go_to_homepage()
+        self.open_homepage()
         #open modification form
         self.open_contact_to_edit_by_id(id)
         #fill form
@@ -206,7 +206,4 @@ class ContactHelper:
 
     def open_contact_to_edit_by_id(self, id):
         wd = self.app.wd
-        self.open_homepage()
-        row = wd.find_elements_by_name("entry")[id]
-        cell = row.find_elements_by_tag_name("td")[7]
-        cell.find_element_by_tag_name("a").click()
+        wd.find_element_by_css_selector("a[href='edit.php?id=%s']" % id).click()
