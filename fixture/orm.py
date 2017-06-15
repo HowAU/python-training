@@ -1,10 +1,8 @@
-from pony.orm import *
+from pony.orm import*
 from datetime import datetime
 
 
-
 class ORMFixture:
-    pass
 
     db = Database()
 
@@ -30,10 +28,10 @@ class ORMFixture:
         deprecated = Optional(datetime, column='deprecated')
 
         #привязка к БД
-        def __init__(self, host, name, user, password):
-            self.db.bind('mysql', host=host, database=name, user=user, password=password)
-            self.db.generate_mapping() #занимается сопоставлением описанных классов с таблицами и полями в этих таблицах в частности
+    def __init__(self, host, name, user, password):
+        self.db.bind('mysql', host=host, database=name, user=user, password=password)
+        self.db.generate_mapping() #занимается сопоставлением описанных классов с таблицами и полями в этих таблицах в частности
 
-        @db_session
-        def get_group_list(self):
-            return(list(select(g for g in ORMFixture.ORMGroup)))
+    @db_session
+    def get_group_list(self):
+        return(list(select(g for g in ORMFixture.ORMGroup)))
