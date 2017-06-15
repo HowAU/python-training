@@ -130,10 +130,10 @@ class ContactHelper:
                 id = cells[0].find_element_by_name("selected[]").get_attribute("value") #при создании списка cells получается
                 # поэлементный мегасписок содержащий все, что имеется в столбце у таблицы контактов, из этих поэлементных значений
                 #  мы имеем возможность выбрать нужные нам свойства и далее работать с ними
-                contact_address = cells[3].text
+                address = cells[3].text
                 all_emails = cells[4].text
                 all_phones = cells[5].text#берем текст ячейки
-                self.contact_cache.append(Contact(id=id, lastname=lastname, firstname=firstname, address=contact_address,
+                self.contact_cache.append(Contact(id=id, lastname=lastname, firstname=firstname, address=address,
                                                   all_emails_from_homepage=all_emails, all_phones_from_homepage=all_phones)) #заменяем телефоны поштучно на список со всеми телефонами сразу
         return list(self.contact_cache)
 
