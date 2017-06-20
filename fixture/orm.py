@@ -9,6 +9,16 @@ class ORMFixture:
 
     db = Database()
 
+    #привязка к БД
+    def __init__(self, host, name, user, password):
+        conv = encoders
+        conv.update(decoders)
+        conv[datetime] = convert_mysql_timestamp
+        self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=conv)
+        self.db.generate_mapping() #занимается сопоставлением описанных классов с таблицами и полями в этих таблицах в частности
+        sql_debug(True)
+
+
     class ORMGroup(db.Entity):
         _table_ = 'group_list'#указываем название таблицы
         id = PrimaryKey(int, column='group_id')
@@ -24,15 +34,6 @@ class ORMFixture:
         lastname = Optional(str, column='lastname')
         deprecated = Optional(datetime, column='deprecated')
         groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="contacts", lazy=True)
-
-        #привязка к БД
-    def __init__(self, host, name, user, password):
-        conv = encoders
-        conv.update(decoders)
-        conv[datetime] = convert_mysql_timestamp
-        self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=conv)
-        self.db.generate_mapping() #занимается сопоставлением описанных классов с таблицами и полями в этих таблицах в частности
-        sql_debug(True)
 
     def convert_groups_to_model(self, groups):
         def convert(group):
@@ -62,6 +63,8 @@ class ORMFixture:
         orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
         return self.convert_contacts_to_model(
             select(c for c in ORMFixture.ORMContact if c.deprecated is None and orm_group not in c.groups))
+
+
 
 
 

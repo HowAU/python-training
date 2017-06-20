@@ -5,7 +5,7 @@ from fixture.application import Application
 import importlib
 import jsonpickle
 from fixture.db import DbFixture
-
+from fixture.orm import ORMFixture
 
 
 fixture = None
@@ -44,13 +44,24 @@ def db(request):
     return dbfixture
 
 
-@pytest.fixture (scope="session", autouse=True)
+@pytest.fixture
+def orm(request):
+    orm_config = load_config(request.config.getoption("--target"))['orm']
+    ormfixture = ORMFixture(host=orm_config['host'], name=orm_config['name'], user=orm_config['user'], password=orm_config['password'])
+    def fin():
+        ormfixture.destroy()
+    request.addfinalizer(fin)
+    return ormfixture
+
+
+@pytest.fixture(scope="session", autouse=True)
 def stop(request):
     def fin():
         fixture.session.ensure_logout()
         fixture.destroy()
     request.addfinalizer(fin) #указание на разрушение фикстуры
     return fixture
+
 
 @pytest.fixture
 def check_ui(request):
@@ -61,7 +72,6 @@ def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox") #что хотим передать, что с этим сделать и какое значение по умолчанию
     parser.addoption("--target", action="store", default="target.json")
     parser.addoption("--check_ui", action="store_true")
-
 
 
 # что происходит в этой функции - грубо говоря мы ищем файлы в дирректории указанной далее. Как - задаем в старте теста адрес

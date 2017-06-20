@@ -12,6 +12,7 @@ class ContactHelper:
 
     def creating_the_contact(self, contact):
         wd = self.app.wd
+        self.open_homepage()
         self.open_new_contact_page()
         # create_contact
         self.fill_contact_form(contact)
@@ -80,7 +81,7 @@ class ContactHelper:
 
     def delete_contact_by_index(self, index):
         wd = self.app.wd
-        self.go_to_homepage()
+        self.open_homepage()
         self.select_contact_by_index(index)
         self.find_delete_button()
         wd.switch_to_alert().accept()
@@ -95,7 +96,7 @@ class ContactHelper:
 
     def modify_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
-        self.go_to_homepage()
+        self.open_homepage()
         self.select_contact_by_index(index)
         #open modification form
         self.open_contact_to_edit_by_index(index)
