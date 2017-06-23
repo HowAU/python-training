@@ -2,7 +2,6 @@ from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.group import GroupHelper
 from fixture.contact import ContactHelper
-from fixture.orm import ORMFixture
 
 
 class Application:
